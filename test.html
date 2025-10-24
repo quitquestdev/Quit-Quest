@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quit Quest RPG - Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      min-height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <div id="debug" style="position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.8); color: lime; padding: 10px; font-size: 12px; max-width: 300px;"></div>
+
+  <script type="text/babel">
+    const debug = document.getElementById('debug');
+
+    function log(msg) {
+      console.log(msg);
+      debug.innerHTML += msg + '<br>';
+    }
+
+    log('Script started...');
+    log('React: ' + (typeof React !== 'undefined' ? 'loaded' : 'NOT loaded'));
+    log('ReactDOM: ' + (typeof ReactDOM !== 'undefined' ? 'loaded' : 'NOT loaded'));
+
+    const TestApp = () => {
+      log('TestApp component rendering...');
+      return (
+        <div style={{padding: '20px', textAlign: 'center'}}>
+          <h1 style={{fontSize: '48px', color: '#fbbf24'}}>🏰 QUIT QUEST RPG</h1>
+          <p style={{fontSize: '24px', color: 'white'}}>If you see this, React is working!</p>
+          <div style={{marginTop: '20px', padding: '20px', background: 'rgba(255,255,255,0.1)', borderRadius: '10px'}}>
+            <p>✅ React loaded</p>
+            <p>✅ Babel transpiling</p>
+            <p>✅ Components rendering</p>
+          </div>
+        </div>
+      );
+    };
+
+    try {
+      log('Creating root...');
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      log('Rendering app...');
+      root.render(<TestApp />);
+      log('App rendered successfully!');
+    } catch (error) {
+      log('ERROR: ' + error.message);
+      console.error('Full error:', error);
+    }
+  </script>
+</body>
+</html>
