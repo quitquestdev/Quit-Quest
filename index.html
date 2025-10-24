@@ -9,8 +9,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- React and ReactDOM -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
   <!-- Babel Standalone for JSX transformation -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -21,10 +21,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <style>
-    body {
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
       padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
       background: linear-gradient(to bottom, #0f172a, #1e293b);
+      min-height: 100vh;
+    }
+
+    #root {
+      width: 100%;
       min-height: 100vh;
     }
 
@@ -33,6 +48,29 @@
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
+      line-height: 1.8;
+    }
+
+    /* Improved readability for pixelated font */
+    .pixelated.text-xs {
+      font-size: 0.65rem;
+      line-height: 1.4;
+    }
+
+    .pixelated.text-sm {
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+
+    /* Better spacing for buttons */
+    button.pixelated {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+
+    /* Ensure inputs work well */
+    input.pixelated {
+      font-size: 0.875rem;
     }
 
     @keyframes shimmer {
@@ -116,7 +154,7 @@ const Icon = ({ name, className = "w-6 h-6" }) => {
     Sparkles: "✨", Flame: "🔥", Wind: "💨", Zap: "⚡", Swords: "⚔️",
     AlertTriangle: "⚠️", Activity: "📊", BookOpen: "📖", Scroll: "📜", Map: "🗺️"
   };
-  return <span className={className} style={{ display: 'inline-block' }}>{icons[name] || "•"}</span>;
+  return <span className={className} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5em' }}>{icons[name] || "•"}</span>;
 };
 
 const Calendar = (props) => <Icon name="Calendar" {...props} />;
@@ -1586,9 +1624,22 @@ const QuitQuestRPG = () => {
 // Make component available globally
 window.QuitQuestRPG = QuitQuestRPG;
 
-    // Mount the app
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<QuitQuestRPG />);
+    // Mount the app with error handling
+    try {
+      console.log('React:', typeof React);
+      console.log('ReactDOM:', typeof ReactDOM);
+      console.log('Starting app...');
+      const rootElement = document.getElementById('root');
+      if (!rootElement) {
+        throw new Error('Root element not found');
+      }
+      const root = ReactDOM.createRoot(rootElement);
+      root.render(<QuitQuestRPG />);
+      console.log('App rendered successfully!');
+    } catch (error) {
+      console.error('Error mounting app:', error);
+      document.body.innerHTML = '<div style="color: white; padding: 20px; font-family: Arial;"><h1>Error Loading App</h1><p>' + error.message + '</p><p>Check browser console for details.</p></div>';
+    }
   </script>
 </body>
 </html>
