@@ -131,6 +131,7 @@ const QuitQuestRPG = () => {
   const [showParticles, setShowParticles] = useState(false);
   const [battleAnimation, setBattleAnimation] = useState('');
   const [enemyAnimation, setEnemyAnimation] = useState('');
+  const [selectedStoryDay, setSelectedStoryDay] = useState(null);
 
   // Story Content System
   const storyContent = {
@@ -1472,85 +1473,7 @@ const QuitQuestRPG = () => {
     </div>
   );
 
-  return (
-    <>
-      <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-        
-        .pixelated {
-          font-family: 'Press Start 2P', 'Courier New', monospace;
-          image-rendering: pixelated;
-          image-rendering: -moz-crisp-edges;
-          image-rendering: crisp-edges;
-        }
-        
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        
-        @keyframes twinkle {
-          0%, 100% { opacity: 0; }
-          50% { opacity: 1; }
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes scale-up {
-          0% { transform: scale(0); }
-          50% { transform: scale(1.1); }
-          100% { transform: scale(1); }
-        }
-        
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate-shimmer {
-          animation: shimmer 2s infinite;
-        }
-        
-        .animate-twinkle {
-          animation: twinkle 5s infinite;
-        }
-        
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-        
-        .animate-scale-up {
-          animation: scale-up 0.5s ease-out;
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 0.5s ease-out;
-        }
-        
-        .player-attack {
-          animation: attack-right 0.5s ease-out;
-        }
-        
-        .enemy-attack {
-          animation: attack-left 0.5s ease-out;
-        }
-        
-        @keyframes attack-right {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(20px); }
-        }
-        
-        @keyframes attack-left {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(-20px); }
-        }
-      `}</style>
-      {gameState === 'setup' ? <SetupScreen /> : <GameScreen />}
-    </>
-  );
+  return gameState === 'setup' ? <SetupScreen /> : <GameScreen />;
 };
 
 // Make component available globally
