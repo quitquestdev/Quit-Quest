@@ -25,22 +25,30 @@
       box-sizing: border-box;
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
+    html {
       height: 100%;
-      overflow-x: hidden;
     }
 
     body {
-      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      margin: 0;
+      padding: 0;
+      width: 100%;
       min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      background-attachment: fixed;
     }
 
     #root {
       width: 100%;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Prevent animation flicker on input */
+    input:focus {
+      outline: none;
     }
 
     .pixelated {
@@ -781,26 +789,36 @@ const QuitQuestRPG = () => {
   };
 
   // Setup Screen
-  const SetupScreen = () => (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 p-4 relative overflow-hidden">
-      {/* Animated background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-twinkle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`
-            }}
-          >
-            ⭐
-          </div>
-        ))}
-      </div>
+  const SetupScreen = () => {
+    // Memoize stars to prevent re-rendering
+    const stars = React.useMemo(() =>
+      [...Array(50)].map((_, i) => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        delay: Math.random() * 5
+      })), []
+    );
 
-      <div className="max-w-2xl mx-auto relative z-10">
+    return (
+      <div className="min-h-screen w-full bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 p-4 sm:p-6 md:p-8 flex items-center justify-center">
+        {/* Animated background */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          {stars.map((star, i) => (
+            <div
+              key={i}
+              className="absolute animate-twinkle"
+              style={{
+                left: `${star.left}%`,
+                top: `${star.top}%`,
+                animationDelay: `${star.delay}s`
+              }}
+            >
+              ⭐
+            </div>
+          ))}
+        </div>
+
+        <div className="w-full max-w-2xl relative z-10">
         <div className="bg-gradient-to-br from-yellow-600 to-amber-600 border-4 border-yellow-500 rounded-lg p-6 mb-6 shadow-2xl relative overflow-hidden pixelated">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-shimmer"></div>
           <h1 className="text-3xl font-bold text-slate-900 text-center mb-2 relative z-10">🏰 QUIT QUEST</h1>
@@ -822,7 +840,7 @@ const QuitQuestRPG = () => {
           </div>
 
           {setupStep === 1 && (
-            <div className="animate-fade-in">
+            <div>
               <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">⚔️ HERO NAME</h2>
               <p className="text-gray-300 mb-4">What shall the bards call you, brave warrior?</p>
               <input
@@ -830,26 +848,27 @@ const QuitQuestRPG = () => {
                 value={setupForm.heroName}
                 onChange={(e) => handleSetupChange('heroName', e.target.value)}
                 placeholder="Enter your hero name..."
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none pixelated"
+                autoFocus
+                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               />
             </div>
           )}
 
           {setupStep === 2 && (
-            <div className="animate-fade-in">
+            <div>
               <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">📅 QUIT DATE</h2>
               <p className="text-gray-300 mb-4">When did you start this heroic quest?</p>
               <input
                 type="date"
                 value={setupForm.quitDate}
                 onChange={(e) => handleSetupChange('quitDate', e.target.value)}
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               />
             </div>
           )}
 
           {setupStep === 3 && (
-            <div className="animate-fade-in">
+            <div>
               <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">🚬 DAILY HABIT</h2>
               <p className="text-gray-300 mb-4">How many cigarettes did you smoke per day?</p>
               <input
@@ -857,13 +876,13 @@ const QuitQuestRPG = () => {
                 value={setupForm.cigarettesPerDay}
                 onChange={(e) => handleSetupChange('cigarettesPerDay', e.target.value)}
                 placeholder="20"
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               />
             </div>
           )}
 
           {setupStep === 4 && (
-            <div className="animate-fade-in">
+            <div>
               <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">💰 PACK PRICE</h2>
               <p className="text-gray-300 mb-4">How much did a pack cost? (in dollars)</p>
               <input
@@ -872,13 +891,13 @@ const QuitQuestRPG = () => {
                 value={setupForm.pricePerPack}
                 onChange={(e) => handleSetupChange('pricePerPack', e.target.value)}
                 placeholder="12.50"
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               />
             </div>
           )}
 
           {setupStep === 5 && (
-            <div className="animate-fade-in">
+            <div>
               <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">🎭 CHOOSE CLASS</h2>
               <p className="text-gray-300 mb-4">Select your hero class:</p>
               <div className="grid grid-cols-3 gap-4">
@@ -925,9 +944,10 @@ const QuitQuestRPG = () => {
             </button>
           </div>
         </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // Dashboard Screen
   const DashboardScreen = () => (
