@@ -37,6 +37,14 @@ const BookOpen = (props) => <Icon name="BookOpen" {...props} />;
 const Scroll = (props) => <Icon name="Scroll" {...props} />;
 const Map = (props) => <Icon name="Map" {...props} />;
 
+// Generate stars ONCE at script load - prevents ANY re-render issues
+const BACKGROUND_STARS = [...Array(50)].map((_, i) => ({
+  id: i,
+  left: Math.random() * 100,
+  top: Math.random() * 100,
+  delay: Math.random() * 5
+}));
+
 const QuitQuestRPG = () => {
   // Game States
   const [gameState, setGameState] = useState('setup'); // 'setup', 'playing'
@@ -634,14 +642,6 @@ const QuitQuestRPG = () => {
       </div>
     );
   };
-
-  // Generate stars ONCE outside component - prevents ANY re-render issues
-  const BACKGROUND_STARS = [...Array(50)].map((_, i) => ({
-    id: i,
-    left: Math.random() * 100,
-    top: Math.random() * 100,
-    delay: Math.random() * 5
-  }));
 
   // Setup Screen
   const SetupScreen = () => {
