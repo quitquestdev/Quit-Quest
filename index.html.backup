@@ -8,7 +8,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- React and ReactDOM (Production builds for better performance) -->
+  <!-- React and ReactDOM -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
@@ -21,12 +21,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      height: 100%;
+    }
 
     body {
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, sans-serif;
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      background-attachment: fixed;
+    }
+
+    #root {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Prevent animation flicker on input */
+    input:focus {
+      outline: none;
     }
 
     .pixelated {
@@ -34,6 +56,29 @@
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
+      line-height: 1.8;
+    }
+
+    /* Improved readability for pixelated font */
+    .pixelated.text-xs {
+      font-size: 0.65rem;
+      line-height: 1.4;
+    }
+
+    .pixelated.text-sm {
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+
+    /* Better spacing for buttons */
+    button.pixelated {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+
+    /* Ensure inputs work well */
+    input.pixelated {
+      font-size: 0.875rem;
     }
 
     @keyframes shimmer {
@@ -117,7 +162,7 @@ const Icon = ({ name, className = "w-6 h-6" }) => {
     Sparkles: "✨", Flame: "🔥", Wind: "💨", Zap: "⚡", Swords: "⚔️",
     AlertTriangle: "⚠️", Activity: "📊", BookOpen: "📖", Scroll: "📜", Map: "🗺️"
   };
-  return <span className={className} style={{ display: 'inline-block' }}>{icons[name] || "•"}</span>;
+  return <span className={className} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5em' }}>{icons[name] || "•"}</span>;
 };
 
 const Calendar = (props) => <Icon name="Calendar" {...props} />;
@@ -744,26 +789,36 @@ const QuitQuestRPG = () => {
   };
 
   // Setup Screen
-  const SetupScreen = () => (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 p-4 relative overflow-hidden">
-      {/* Animated background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-twinkle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`
-            }}
-          >
-            ⭐
-          </div>
-        ))}
-      </div>
+  const SetupScreen = () => {
+    // Memoize stars to prevent re-rendering
+    const stars = React.useMemo(() =>
+      [...Array(50)].map((_, i) => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        delay: Math.random() * 5
+      })), []
+    );
 
-      <div className="max-w-2xl mx-auto relative z-10">
+    return (
+      <div className="min-h-screen w-full bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 p-4 sm:p-6 md:p-8 flex items-center justify-center">
+        {/* Animated background */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          {stars.map((star, i) => (
+            <div
+              key={i}
+              className="absolute animate-twinkle"
+              style={{
+                left: `${star.left}%`,
+                top: `${star.top}%`,
+                animationDelay: `${star.delay}s`
+              }}
+            >
+              ⭐
+            </div>
+          ))}
+        </div>
+
+        <div className="w-full max-w-2xl relative z-10">
         <div className="bg-gradient-to-br from-yellow-600 to-amber-600 border-4 border-yellow-500 rounded-lg p-6 mb-6 shadow-2xl relative overflow-hidden pixelated">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-shimmer"></div>
           <h1 className="text-3xl font-bold text-slate-900 text-center mb-2 relative z-10">🏰 QUIT QUEST</h1>
@@ -793,7 +848,8 @@ const QuitQuestRPG = () => {
                 value={setupForm.heroName}
                 onChange={(e) => handleSetupChange('heroName', e.target.value)}
                 placeholder="Enter your hero name..."
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none pixelated"
+                autoFocus
+                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               />
             </div>
           )}
@@ -806,7 +862,7 @@ const QuitQuestRPG = () => {
                 type="date"
                 value={setupForm.quitDate}
                 onChange={(e) => handleSetupChange('quitDate', e.target.value)}
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               />
             </div>
           )}
@@ -820,7 +876,7 @@ const QuitQuestRPG = () => {
                 value={setupForm.cigarettesPerDay}
                 onChange={(e) => handleSetupChange('cigarettesPerDay', e.target.value)}
                 placeholder="20"
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               />
             </div>
           )}
@@ -835,7 +891,7 @@ const QuitQuestRPG = () => {
                 value={setupForm.pricePerPack}
                 onChange={(e) => handleSetupChange('pricePerPack', e.target.value)}
                 placeholder="12.50"
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               />
             </div>
           )}
@@ -888,9 +944,10 @@ const QuitQuestRPG = () => {
             </button>
           </div>
         </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // Dashboard Screen
   const DashboardScreen = () => (
@@ -1587,9 +1644,22 @@ const QuitQuestRPG = () => {
 // Make component available globally
 window.QuitQuestRPG = QuitQuestRPG;
 
-// Mount the app
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<QuitQuestRPG />);
+    // Mount the app with error handling
+    try {
+      console.log('React:', typeof React);
+      console.log('ReactDOM:', typeof ReactDOM);
+      console.log('Starting app...');
+      const rootElement = document.getElementById('root');
+      if (!rootElement) {
+        throw new Error('Root element not found');
+      }
+      const root = ReactDOM.createRoot(rootElement);
+      root.render(<QuitQuestRPG />);
+      console.log('App rendered successfully!');
+    } catch (error) {
+      console.error('Error mounting app:', error);
+      document.body.innerHTML = '<div style="color: white; padding: 20px; font-family: Arial;"><h1>Error Loading App</h1><p>' + error.message + '</p><p>Check browser console for details.</p></div>';
+    }
   </script>
 </body>
 </html>
