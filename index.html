@@ -762,25 +762,8 @@ const QuitQuestRPG = () => {
   // Setup Screen
   const SetupScreen = () => {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 p-4 relative overflow-hidden">
-        {/* Animated background */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          {BACKGROUND_STARS.map((star) => (
-            <div
-              key={star.id}
-              className="absolute animate-twinkle pointer-events-none"
-              style={{
-                left: `${star.left}%`,
-                top: `${star.top}%`,
-                animationDelay: `${star.delay}s`
-              }}
-            >
-              ⭐
-            </div>
-          ))}
-        </div>
-
-        <div className="max-w-2xl mx-auto relative z-10">
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 p-4 flex items-center justify-center">
+        <div className="max-w-2xl w-full">
         <div className="bg-gradient-to-br from-yellow-600 to-amber-600 border-4 border-yellow-500 rounded-lg p-6 mb-6 shadow-2xl relative overflow-hidden pixelated">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-shimmer"></div>
           <h1 className="text-3xl font-bold text-slate-900 text-center mb-2 relative z-10">🏰 QUIT QUEST</h1>
