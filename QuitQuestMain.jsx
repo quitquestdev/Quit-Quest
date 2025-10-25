@@ -635,24 +635,21 @@ const QuitQuestRPG = () => {
     );
   };
 
+  // Generate stars ONCE outside component - prevents ANY re-render issues
+  const BACKGROUND_STARS = [...Array(50)].map((_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    delay: Math.random() * 5
+  }));
+
   // Setup Screen
   const SetupScreen = () => {
-    // Memoize star positions to prevent re-calculation on every render
-    // This is CRITICAL to prevent input de-selection and flickering
-    const stars = React.useMemo(() =>
-      [...Array(50)].map((_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        delay: Math.random() * 5
-      }))
-    , []);
-
     return (
       <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 p-4 relative overflow-hidden">
         {/* Animated background */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          {stars.map((star) => (
+          {BACKGROUND_STARS.map((star) => (
             <div
               key={star.id}
               className="absolute animate-twinkle"
