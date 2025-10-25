@@ -768,7 +768,7 @@ const QuitQuestRPG = () => {
           {BACKGROUND_STARS.map((star) => (
             <div
               key={star.id}
-              className="absolute animate-twinkle"
+              className="absolute animate-twinkle pointer-events-none"
               style={{
                 left: `${star.left}%`,
                 top: `${star.top}%`,
@@ -902,11 +902,11 @@ const QuitQuestRPG = () => {
               className="flex-1 py-3 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-slate-900 font-bold rounded border-4 border-yellow-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed pixelated"
             >
               {setupStep === 5 ? '⚔️ START QUEST' : 'NEXT →'}
-            </button>
+              </button>
           </div>
         </div>
+        </div>
       </div>
-    </div>
     );
   };
 
