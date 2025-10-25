@@ -786,65 +786,65 @@ const QuitQuestRPG = () => {
 
           {setupStep === 1 && (
             <div>
-              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">⚔️ HERO NAME</h2>
-              <p className="text-gray-300 mb-4">What shall the bards call you, brave warrior?</p>
+              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated text-center">⚔️ HERO NAME</h2>
+              <p className="text-gray-300 mb-4 text-center">What shall the bards call you, brave warrior?</p>
               <input
                 type="text"
                 value={setupForm.heroName}
                 onChange={(e) => handleSetupChange('heroName', e.target.value)}
                 placeholder="Enter your hero name..."
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full max-w-md mx-auto block px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none text-center pixelated"
               />
             </div>
           )}
 
           {setupStep === 2 && (
             <div>
-              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">📅 QUIT DATE</h2>
-              <p className="text-gray-300 mb-4">When did you start this heroic quest?</p>
+              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated text-center">📅 QUIT DATE</h2>
+              <p className="text-gray-300 mb-4 text-center">When did you start this heroic quest?</p>
               <input
                 type="date"
                 value={setupForm.quitDate}
                 onChange={(e) => handleSetupChange('quitDate', e.target.value)}
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full max-w-md mx-auto block px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white focus:border-yellow-500 focus:outline-none text-center pixelated"
               />
             </div>
           )}
 
           {setupStep === 3 && (
             <div>
-              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">🚬 DAILY HABIT</h2>
-              <p className="text-gray-300 mb-4">How many cigarettes did you smoke per day?</p>
+              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated text-center">🚬 DAILY HABIT</h2>
+              <p className="text-gray-300 mb-4 text-center">How many cigarettes did you smoke per day?</p>
               <input
                 type="number"
                 value={setupForm.cigarettesPerDay}
                 onChange={(e) => handleSetupChange('cigarettesPerDay', e.target.value)}
                 placeholder="20"
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full max-w-md mx-auto block px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none text-center pixelated"
               />
             </div>
           )}
 
           {setupStep === 4 && (
             <div>
-              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">💰 PACK PRICE</h2>
-              <p className="text-gray-300 mb-4">How much did a pack cost? (in dollars)</p>
+              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated text-center">💰 PACK PRICE</h2>
+              <p className="text-gray-300 mb-4 text-center">How much did a pack cost? (in dollars)</p>
               <input
                 type="number"
                 step="0.01"
                 value={setupForm.pricePerPack}
                 onChange={(e) => handleSetupChange('pricePerPack', e.target.value)}
                 placeholder="12.50"
-                className="w-full px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none pixelated"
+                className="w-full max-w-md mx-auto block px-4 py-3 bg-slate-700 border-2 border-slate-600 rounded text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none text-center pixelated"
               />
             </div>
           )}
 
           {setupStep === 5 && (
             <div>
-              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated">🎭 CHOOSE CLASS</h2>
-              <p className="text-gray-300 mb-4">Select your hero class:</p>
-              <div className="grid grid-cols-3 gap-4">
+              <h2 className="text-2xl font-bold text-yellow-500 mb-4 pixelated text-center">🎭 CHOOSE CLASS</h2>
+              <p className="text-gray-300 mb-4 text-center">Select your hero class:</p>
+              <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                 {['warrior', 'mage', 'rogue'].map(classType => (
                   <button
                     key={classType}
