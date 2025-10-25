@@ -37,14 +37,6 @@ const BookOpen = (props) => <Icon name="BookOpen" {...props} />;
 const Scroll = (props) => <Icon name="Scroll" {...props} />;
 const Map = (props) => <Icon name="Map" {...props} />;
 
-// Generate stars ONCE at script load - prevents ANY re-render issues
-const BACKGROUND_STARS = [...Array(50)].map((_, i) => ({
-  id: i,
-  left: Math.random() * 100,
-  top: Math.random() * 100,
-  delay: Math.random() * 5
-}));
-
 const QuitQuestRPG = () => {
   // Game States
   const [gameState, setGameState] = useState('setup'); // 'setup', 'playing'
@@ -646,9 +638,9 @@ const QuitQuestRPG = () => {
   // Setup Screen
   const SetupScreen = () => {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 p-4 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-blue-900 via-blue-800 to-slate-900 p-4 flex items-center justify-center">
         <div className="max-w-2xl w-full">
-        <div className="bg-gradient-to-br from-yellow-600 to-amber-600 border-4 border-yellow-500 rounded-lg p-6 mb-6 shadow-2xl relative overflow-hidden pixelated">
+        <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 border-4 border-yellow-400 rounded-lg p-6 mb-6 shadow-2xl relative overflow-hidden pixelated">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-shimmer"></div>
           <h1 className="text-3xl font-bold text-slate-900 text-center mb-2 relative z-10">🏰 QUIT QUEST</h1>
           <p className="text-slate-800 text-center relative z-10">Begin your legendary smoke-free adventure!</p>
@@ -1362,7 +1354,7 @@ const QuitQuestRPG = () => {
 
   // Main Game Screen
   const GameScreen = () => (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-blue-900 via-blue-800 to-slate-900">
       {/* Particle Effects */}
       <ParticleEffect />
       
