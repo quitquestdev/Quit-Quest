@@ -652,7 +652,7 @@ const QuitQuestRPG = () => {
           {BACKGROUND_STARS.map((star) => (
             <div
               key={star.id}
-              className="absolute animate-twinkle"
+              className="absolute animate-twinkle pointer-events-none"
               style={{
                 left: `${star.left}%`,
                 top: `${star.top}%`,
