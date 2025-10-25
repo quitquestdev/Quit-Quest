@@ -101,8 +101,16 @@
     }
   </style>
 </head>
-<body>
-  <div id="root"></div>
+<body style="margin: 0; padding: 0; min-height: 100vh;">
+  <div id="root">
+    <!-- Loading fallback -->
+    <div style="min-height: 100vh; background: linear-gradient(to bottom, #0f172a, #581c87, #0f172a); display: flex; align-items: center; justify-content: center; color: white; font-family: system-ui; text-align: center; padding: 20px;">
+      <div>
+        <h1 style="font-size: 2rem; margin-bottom: 1rem;">🏰 Loading Quit Quest...</h1>
+        <p style="color: #94a3b8;">If this message persists, please check your browser console for errors.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- Application Code -->
   <script type="text/babel">
@@ -1596,10 +1604,29 @@ const QuitQuestRPG = () => {
 
 // Make component available globally
 window.QuitQuestRPG = QuitQuestRPG;
+// Make component available globally
+window.QuitQuestRPG = QuitQuestRPG;
 
-// Mount the app
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<QuitQuestRPG />);
+// Mount the app with error handling
+try {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<QuitQuestRPG />);
+  console.log('✅ Quit Quest app mounted successfully');
+} catch (error) {
+  console.error('❌ Error mounting Quit Quest app:', error);
+  document.getElementById('root').innerHTML = \`
+    <div style="min-height: 100vh; background: linear-gradient(to bottom, #0f172a, #581c87, #0f172a); display: flex; align-items: center; justify-content: center; color: white; font-family: system-ui; text-align: center; padding: 20px;">
+      <div>
+        <h1 style="font-size: 2rem; margin-bottom: 1rem; color: #ef4444;">⚠️ Error Loading App</h1>
+        <p style="color: #94a3b8; margin-bottom: 1rem;">There was an error loading Quit Quest.</p>
+        <pre style="background: #1e293b; padding: 1rem; border-radius: 0.5rem; text-align: left; overflow-x: auto; max-width: 600px;">\${error.message}
+
+\${error.stack}</pre>
+        <p style="color: #94a3b8; margin-top: 1rem; font-size: 0.875rem;">Please check your browser console for more details.</p>
+      </div>
+    </div>
+  \`;
+}
   </script>
 </body>
 </html>
